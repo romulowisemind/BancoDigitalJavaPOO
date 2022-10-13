@@ -8,20 +8,25 @@ public abstract class Conta implements IConta {
     protected int agencia;
     protected int numero;
     protected double saldo;
+    protected Cliente cliente;
+    protected QualBanco qualBanco;
 
-    public Conta() {
+    public Conta(Cliente cliente, QualBanco qualBanco) {
         this.agencia = Conta.AGENCIA_PADRAO;
         this.numero = SEQUENCIAL++;
+        this.cliente = cliente;
+        this.qualBanco = qualBanco;
     }
+
 
     @Override
     public void sacar(double valor) {
-        saldo = saldo - valor;
+        saldo -= valor;
     }
 
     @Override
     public void depositar(double valor) {
-        saldo = saldo + valor;
+        saldo += valor;
     }
 
     @Override
@@ -41,7 +46,11 @@ public abstract class Conta implements IConta {
     public double getSaldo() {
         return saldo;
     }
+
+
     protected void imprimirInfosComuns() {
+        System.out.println(String.format("Nome do Banco: %s", this.qualBanco.getNomeDoBanco()));
+        System.out.println(String.format("Titular: %s", this.cliente.getNome()));
         System.out.println(String.format("Agencia: %d", this.agencia));
         System.out.println(String.format("Conta: %d", this.numero));
         System.out.println(String.format("Saldo: %.2f", this.saldo));
